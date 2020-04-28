@@ -1,5 +1,6 @@
 class SpritAnimation {
-    constructor(height, width, imgSrc, xcount, ycount, showLog) {
+
+    constructor({ height, width, imgSrc, xcount, ycount, showLog = false }) {
         this.height = height;
         this.width = width;
         this.imgSrc = imgSrc;
@@ -9,7 +10,7 @@ class SpritAnimation {
         this.timer = null;
         this.x = 0;
         this.y = 0;
-        this.showLog = showLog
+        this.showLog = showLog;
     }
     showAnimationBox(target, time) {
         // let box = document.createElement('div');
@@ -32,8 +33,11 @@ class SpritAnimation {
         this.startAnimation(this.box, time);
         targetelm.appendChild(this.box);
     }
+    stopAnimation() {
+        clearInterval(this.timer);
+    }
     startAnimation(box, timer = 400) {
-
+        clearInterval(this.timer);
         this.timer = setInterval(() => {
             if (this.x + 1 > this.xcount - 1) {
                 this.x = 0;
@@ -64,7 +68,11 @@ function setMultipleAttribute(elm, propObj) {
         elm.setAttribute(item, propObj[item]);
     })
 }
-var sa = new SpritAnimation(256, 512, "./images/sprites-cat-running.png", 4, 2)
+var sa = new SpritAnimation({ height: 256, width: 512, imgSrc: "./images/sprites-cat-running.png", xcount: 4, ycount: 2 })
 sa.showAnimationBox("target", 50);
-var manRun = new SpritAnimation(318, 181, "./images/manW.png", 8, 1);
+var manRun = new SpritAnimation({ height: 318, width: 181, imgSrc: "./images/manW.png", xcount: 8, ycount: 1 });
 manRun.showAnimationBox("target2", 100);
+
+document.getElementById("stopTarget").addEventListener('click', () => {
+    sa.stopAnimation();
+})
