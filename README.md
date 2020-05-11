@@ -1,2 +1,2 @@
 # sprite-animation
-sprite animation using javascript
+Basic implementation of sprite animation using javascript es6 class concept.
