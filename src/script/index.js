@@ -7,13 +7,15 @@ class SpritAnimation {
         this.xcount = xcount;
         this.ycount = ycount;
         this.box = document.createElement('div');
-        this.timer = 400;
+        this.timer = null;
+        this.interval = 400;
         this.x = 0;
         this.y = 0;
         this.showLog = showLog;
     }
     showAnimationBox(target, time) {
         // let box = document.createElement('div');
+        this.interval = time;
         let targetelm = document.getElementById(target);
         let propObject = {
             class: "animationBox",
@@ -30,13 +32,14 @@ class SpritAnimation {
         `;
 
         setMultipleAttribute(this.box, propObject);
-        this.startAnimation(time);
+        this.startAnimation();
         targetelm.appendChild(this.box);
     }
     stopAnimation() {
         clearInterval(this.timer);
     }
-    startAnimation(timer = 400) {
+    startAnimation() {
+        console.log("timer ", this.interval);
         clearInterval(this.timer);
         this.timer = setInterval(() => {
             if (this.x + 1 > this.xcount - 1) {
@@ -60,7 +63,7 @@ class SpritAnimation {
 
             this.box.style.backgroundPositionX = (this.x * this.width) * -1 + "px";
             this.box.style.backgroundPositionY = (this.y * this.height) * -1 + "px";
-        }, timer)
+        }, this.interval)
     }
 }
 function setMultipleAttribute(elm, propObj) {
@@ -77,5 +80,5 @@ document.getElementById("stopTarget").addEventListener('click', () => {
     sa.stopAnimation();
 });
 document.getElementById("startTarget").addEventListener('click', () => {
-    sa.startAnimation(50);
+    sa.startAnimation();
 });
