@@ -7,7 +7,7 @@ class SpritAnimation {
         this.xcount = xcount;
         this.ycount = ycount;
         this.box = document.createElement('div');
-        this.timer = null;
+        this.timer = 400;
         this.x = 0;
         this.y = 0;
         this.showLog = showLog;
@@ -30,13 +30,13 @@ class SpritAnimation {
         `;
 
         setMultipleAttribute(this.box, propObject);
-        this.startAnimation(this.box, time);
+        this.startAnimation(time);
         targetelm.appendChild(this.box);
     }
     stopAnimation() {
         clearInterval(this.timer);
     }
-    startAnimation(box, timer = 400) {
+    startAnimation(timer = 400) {
         clearInterval(this.timer);
         this.timer = setInterval(() => {
             if (this.x + 1 > this.xcount - 1) {
@@ -75,4 +75,7 @@ manRun.showAnimationBox("target2", 100);
 
 document.getElementById("stopTarget").addEventListener('click', () => {
     sa.stopAnimation();
-})
+});
+document.getElementById("startTarget").addEventListener('click', () => {
+    sa.startAnimation(50);
+});
